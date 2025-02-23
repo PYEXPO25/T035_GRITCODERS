@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Exam Schedule</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Create Exam Schedule</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>Subject:</label>
+            <input type="text" name="subject" required>
+
+            <label>Time Slot:</label>
+            <input type="text" name="time_slot" required>
+
+            <label>Completed:</label>
+            <input type="checkbox" name="completed">
+
+            <button type="submit">Add Schedule</button>
+        </form>
+
+        <button onclick="window.location.href='/'">Go to Dashboard</button>
+
+        <h2>Current Schedule</h2>
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Time Slot</th>
+                <th>Status</th>
+            </tr>
+            {% for schedule in schedules %}
+            <tr>
+                <td>{{ schedule.subject }}</td>
+                <td>{{ schedule.time_slot }}</td>
+                <td>{% if schedule.completed %}✔ Completed{% else %}❌ Incomplete{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

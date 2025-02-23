@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        table,th,td{
+            border : 3px double black;
+            border-collapse: collapse;
+            padding: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Exam Preparation Dashboard</h1>
+        <p>Progress: <span id="progress-bar">{{ progress|floatformat:2 }}%</span></p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: {{ progress }}%;"></div>
+        </div>
+
+        <button onclick="window.location.href='/schedule/'">Prepare for Exam</button>
+
+        <h2>Exam Schedule</h2>
+    
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Time Slot</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for schedule in schedules %}
+            <tr>
+                <td>{{ schedule.subject }}</td>
+                <td>{{ schedule.time_slot }}</td>
+                <td>{% if schedule.completed %}✔ Completed{% else %}❌ Incomplete{% endif %}</td>
+                <td>
+                    <a href="{% url 'update_completion' schedule.id %}">
+                        {% if schedule.completed %}Mark Incomplete{% else %}Mark Complete{% endif %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
